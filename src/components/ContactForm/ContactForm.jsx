@@ -1,6 +1,7 @@
 import css from './ContactForm.module.css';
 import { useState } from 'react';
-import { addContact, getContacts } from 'app/contactsSlice';
+import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -9,7 +10,7 @@ export default function ContactForm() {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
     const dispatch = useDispatch();
-    const contacts = useSelector(getContacts);
+    const contacts = useSelector(selectContacts);
 
 
     const handleInputChange = (e) => {
