@@ -1,39 +1,38 @@
-import { useDispatch, useSelector } from 'react-redux';
-import ContactForm from './ContactForm/ContactForm';
-import Filter from './Filter/Filter';
-import ContactList from './ContactList/ContactList';
-import { fetchContacts } from 'redux/operations';
-import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
-import { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { authOperations } from "redux/authorization";
+import { useEffect, lazy } from "react";
+import { useDispatch } from "react-redux";
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import useAuth from 'services/authHook';
+import { Layout } from './Layout';
+import { ChakraProvider } from '@chakra-ui/react';
+
+
+const Home = lazy(() => import('../pages/Home'));
+const Login = lazy(() => import('../pages/Login'));
+const Register = lazy(() => import('../pages/Register'));
+const Contacts = lazy(() => import('../pages/Contacts'));
 
 export default function App() {
   const dispatch = useDispatch();
-
-  const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch])
+    dispatch(authOperations.getUser());
+  }, [dispatch]);
 
-  return (
-    <div>
-      <h1 style={{textAlign: 'center'}}>Phonebook</h1>
-      <ContactForm/>
-      <h2 style={{textAlign: 'center'}}>My contacts</h2>
-      {contacts.length > 1 && (
-        <Filter />
-      )}
-      {isLoading && !error && (
-        <p>Loading...</p>
-      )}
-      {contacts.length > 0 ? ( 
-        <ContactList />
-      ) : (
-          <h2>There are no contacts yet</h2>
-      )}
-    </div>
-  );
+
+  return isRefreshing ? (
+    <h1>Завантаження користувача...</h1>
+  ) : ( <Routes>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<PublicRoute component={<Home/>} />} />
+            <Route path="/register" element={<PublicRoute restricted redirectTo='/contacts' component={<Register/>} />} />
+            <Route path="/login" element={<PublicRoute restricted redirectTo='/contacts' component={<Login/>} />} />
+            <Route path="/contacts" element={<PrivateRoute redirectTo="/login" component={<Contacts/>} /> } />
+          <Route path="*" element={<Home />} />
+        </Route>
+    </Routes>
+    )
 }
-

@@ -1,7 +1,7 @@
 import css from './ContactForm.module.css';
 import { useState } from 'react';
-import { addContact } from 'redux/operations';
-import { selectContacts } from 'redux/selectors';
+import { addContact } from 'redux/contacts/contactsOperations';
+import { selectContacts } from 'redux/contacts/contactsSelectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -47,7 +47,7 @@ export default function ContactForm() {
     return (
         <form onSubmit={handleSubmit}>
             <div className={css.inputs_bar}>
-                <label className={css.contacts_label}> Name
+                <label className={css.contacts_label}> Ім'я
                 <input
                     type="text"
                     name="name"
@@ -59,7 +59,7 @@ export default function ContactForm() {
                     className={css.contacts_input}
                 />  
                 </label>
-                <label className={css.contacts_label}> Number
+                <label className={css.contacts_label}> Телефон
                 <input
                     type="tel"
                     name="number"
@@ -72,7 +72,7 @@ export default function ContactForm() {
                     />
                 </label>
             </div>
-            <button type="submit" className={css.contacts_btn}>Add contact</button>
+            <button type="submit" className={css.contacts_btn}>Додати контакт</button>
         </form>
     );
 };
