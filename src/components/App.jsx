@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import useAuth from 'services/authHook';
 import { Layout } from './Layout';
-import { ChakraProvider } from '@chakra-ui/react';
+// import { ChakraProvider } from '@chakra-ui/react';
 
 
 const Home = lazy(() => import('../pages/Home'));
