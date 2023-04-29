@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { authOperations } from "redux/authorization";
+import { Text } from '@chakra-ui/react';
+import css from './LoginForm.module.css';
 
 export default function Login() {
 
@@ -28,24 +30,27 @@ export default function Login() {
 
     return (
         <>
-            <h2>Будь ласка увійдіть у свій аакаунт</h2>
-            <form onSubmit={handleSubmit} autoComplete="off">
-                <label> Пошта
+            <Text fontSize='32' color='#572470' pt={10} pb={10}>Будь ласка увійдіть у свій аккаунт</Text>
+            
+            <form onSubmit={handleSubmit} autoComplete="off" className={css.login_form}>
+                <label className={css.login_label}> Пошта
                     <input
+                        className={css.login_input}
                         name="email"
                         type="email"
                         value={email}
                         onChange={handleChange}
                     />
                 </label>
-                <label> Пароль
+                <label className={css.login_label}> Пароль
                     <input
+                        className={css.login_input}
                         name="password"
                         type="password"
                         value={password}
                         onChange={handleChange}/>
                 </label>
-                <button type="submit"> Увійти </button>
+                <button type="submit" className={css.login_btn}> Увійти </button>
             </form>
         </>
     )

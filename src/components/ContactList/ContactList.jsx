@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contacts/contactsOperations';
-import css from './ContactList.module.css';
 import { selectContacts } from 'redux/contacts/contactsSelectors';
 import { useState } from 'react';
 import Modal from 'components/Modal/Modal';
+import { Grid, GridItem, Button, Flex, ButtonGroup, Spacer, Text } from '@chakra-ui/react'
 
 const ContactList = () => {
     const dispatch = useDispatch();
@@ -31,17 +31,22 @@ const ContactList = () => {
     }
 
     return (<>
-        <ul className={css.contacts_box}>
+        <Grid templateColumns='repeat(2, 5fr)' gap={6} pt={10} pb={10}>
             {onFilterChange().map(({ id, name, number }) => (
-                <li key={id} className={css.contacts_item}>
-                    <span key={id} className={css.contacts_text}>
+                <GridItem w='100%' border='1px' borderColor='gray.200' key={id} p={5}>
+                    <Flex>
+                        <Text key={id} fontSize='22' color='#572470'>
                         {name}: {number}
-                    </span>
-                    <button className={css.del_btn} onClick={() => onDeleteContact(id)}>Видалити</button>
-                    <button className={css.del_btn} onClick={() => toggleModal(name, number, id)}>Редагувати</button>
-                </li>
+                        </Text>
+                        <Spacer/>
+                        <ButtonGroup gap={1}>
+                            <Button colorScheme='purple' variant='outline' onClick={() => toggleModal(name, number, id)}>Редагувати</Button>
+                            <Button colorScheme='purple' variant='solid' onClick={() => onDeleteContact(id)}>Видалити</Button>
+                    </ButtonGroup>
+                </Flex>  
+                </GridItem>
             ))}
-        </ul>
+        </Grid>
         {showModal && <Modal
             onClose={toggleModal}
             userName={name}

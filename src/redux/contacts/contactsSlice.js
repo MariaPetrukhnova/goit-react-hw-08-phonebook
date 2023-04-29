@@ -44,7 +44,6 @@ extraReducers: {
     
     [correctContact.pending]: handlePending,
     [correctContact.fulfilled](state, action) {
-      console.log(action.payload);
       state.isLoading = false;
       state.error = null;
       state.items = state.items.filter(item => item.id !== action.payload.id);

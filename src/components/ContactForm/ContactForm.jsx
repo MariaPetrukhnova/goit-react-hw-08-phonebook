@@ -72,7 +72,7 @@ export default function ContactForm() {
                     />
                 </label>
             </div>
-            <button type="submit" className={css.contacts_btn}>Додати контакт</button>
+            <button type="submit" className={css.contacts_btn}>Додати контакти</button>
         </form>
     );
 };

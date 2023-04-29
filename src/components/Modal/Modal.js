@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import css from './Modal.module.css'
+import css from './Modal.module.css';
 import { useDispatch } from 'react-redux';
 import { correctContact } from 'redux/contacts/contactsOperations';
-
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -12,8 +11,6 @@ export default function Modal({ onClose, userName, userNumber, userId }) {
     const [number, setNumber] = useState(`${userNumber}`);
     const [id, setId] = useState(`${userId}`);
     const dispatch = useDispatch();
-
-
 
     const handleKeydown = e => {
         if (e.code === 'Escape') {
@@ -61,9 +58,13 @@ export default function Modal({ onClose, userName, userNumber, userId }) {
     return createPortal(
         <div className={css.Overlay} onClick={handleBackDropClick}>
             <form className={css.Modal} onSubmit={handleModalSubmit}>
-                <input value={name} name='name' onChange={onModalChange} />
-                <input value={number} name='number' onChange={onModalChange}/>
-                <button type='submit'>Змінити</button>
+                <label className={css.Label}> Ім'я
+                    <input className={css.Input} value={name} name='name' onChange={onModalChange} />
+                </label>
+                 <label className={css.Label}> Номер
+                    <input className={css.Input} value={number} name='number' onChange={onModalChange} />
+                </label>
+                <button className={css.ModalBtn} type='submit'>Змінити</button>
             </form>
         </div>,
         modalRoot
